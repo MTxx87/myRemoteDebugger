@@ -38,18 +38,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.sessions', {
+      url: '/sessions',
       views: {
         'tab-chats': {
           templateUrl: 'templates/tab-chats.html',
@@ -78,6 +69,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/sessions');
 
-});
+}).constant('COLORS',
+            
+    ['icon-positive','icon-calm','icon-assertive','icon-balanced','icon-energized','icon-royal','icon-dark']
+            
+).directive('scrollDetector', function($window, $ionicScrollDelegate) {
+  return {
+    restrict : 'A',
+    link: function(scope, element, attrs) {
+      var windowHeight = $window.innerHeight;
+      console.log(windowHeight);    
+      element.on('scroll', function() {
+         if ($ionicScrollDelegate.getScrollPosition().top > windowHeight * 2) {
+            console.log(element);
+         } else {
+            //element.removeClass('show');
+         }
+      });
+    }
+  };
+})

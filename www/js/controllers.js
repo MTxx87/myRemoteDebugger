@@ -3,7 +3,7 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $http, trackingService) { 
     
     $scope.initialize = function (user,url) {
-       trackingService.initializeSession('matteo','http://www.matteotoninidev.altervista.org/backend/backend.php');  
+       trackingService.initializeSession('Gastone','http://www.matteotoninidev.altervista.org/backend/backend.php');  
     }
     
     $scope.close = function () {

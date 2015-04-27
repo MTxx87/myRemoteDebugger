@@ -4,3 +4,50 @@
   color: #999999;
   font-size: 12px;
 }
+
+.icon.icon-stable:before {
+    color: #f8f8f8;
+ }
+.icon.icon-positive:before {
+    color: #387ef5;
+ }
+.icon.icon-calm:before {
+    color: #11c1f3;
+ }
+.icon.icon-assertive:before {
+    color: #ef473a;
+ }
+.icon.icon-balanced:before {
+    color: #33cd5f;
+ }
+.icon.icon-energized:before {
+    color: #ffc900;
+ }
+.icon.icon-royal:before {
+    color: #886aea;
+ }
+.icon.icon-dark:before {
+    color: #444;
+ }
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  z-index: 100;
+  background-color: #000000;
+  width: 40px;
+  text-align: center;
+  border-radius: 50%;
+  height: 41px;
+}
+
+.show {
+    display: block;
+}
+
+.scroll-to-top i {
+  font-size: 35px;
+  color: #FFFFFF;
+  line-height: 40px;
+}

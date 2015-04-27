@@ -1,32 +1,41 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $http) { 
+.controller('ChatsCtrl', function($window, $scope, $q, $ionicScrollDelegate, MyRemoteFactory) {
     
-    data = {
-        method : 'interface/getSessions'
+    function getSessions (startId) {
+        D_sessions = $q.defer();
+        P_sessions = D_sessions.promise;
+
+        P_sessions.then(
+            function (data) {
+                data = MyRemoteFactory.giveColor(data);
+                console.log(data);
+                $scope.sessions = data;
+                $scope.last = 0;
+                $scope.$broadcast('scroll.refreshComplete');
+            },
+            function (data) {
+                console.log(data);
+            }
+        );
+        
+        MyRemoteFactory.getSessions(startId,D_sessions);
     }
     
-    $http({method: 'post', url: 'http://www.matteotoninidev.altervista.org/backend/frontend.php', data : angular.toJson(data)})
-        .success(function(data, status, headers, config) {
-            console.log(data);
-            $scope.sessions = data;
-          }).
-          error(function(data, status, headers, config) {
-            console.log(data);
-            console.log(status);
-        });
+    getSessions(0);
     
+    $scope.doRefresh = function () {
+        getSessions(0);
+    }
+    
+    $scope.scrollTop = function() {
+        console.log("ciao");
+        $ionicScrollDelegate.scrollTop(true);
+    };
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  }
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('ChatDetailCtrl', function($scope, $stateParams) {
+ 
 })
 
 .controller('AccountCtrl', function($scope) {

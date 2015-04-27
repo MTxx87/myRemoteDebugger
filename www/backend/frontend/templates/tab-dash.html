@@ -12,6 +12,7 @@
     <ion-scroll style="height: 200px;" has-bouncing="true">
           <div class="list">
               <a class="item item-icon-left item-icon-right" href="#" ng-repeat="session in sessions | filter:searchText">
+                <span>{{session.msg}}</span>  
                 <i class="icon ion-person"></i>
                   {{session.user}} 
                   <div class="more-info">{{session.startDate | date:'MM/dd/yy'}} - {{session.startTime}} - {{session.sessionId}}</div>

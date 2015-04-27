@@ -2,6 +2,7 @@
     "jscodehints.detectedExclusions": [
         "/Users/matteo/Documents/MyRemoteDebugger/www/js/app.js",
         "/Users/matteo/Documents/MyRemoteDebugger/www/js/MyRemoteDebugger.js",
-        "/Users/matteo/Documents/MyRemoteDebugger/www/backend/frontend/js/controllers.js"
+        "/Users/matteo/Documents/MyRemoteDebugger/www/backend/frontend/js/controllers.js",
+        "/Users/matteo/Documents/MyRemoteDebugger/www/backend/frontend/js/services.js"
     ]
 }

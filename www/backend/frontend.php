@@ -6,12 +6,9 @@
 
     $jsonPOST = json_decode(file_get_contents("php://input"));
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//        $pieces = explode("/", $jsonPOST->method);
-//        $folder = $pieces[0];
-//        $method = $pieces[1];
         switch ($jsonPOST->method) {
             case 'interface/getSessions':
-                $array = DB::query("SELECT * FROM sessions");
+                $array = DB::query("SELECT * FROM sessions WHERE id > %i ORDER BY id ASC", $jsonPOST->id);
                 $response = json_encode($array);
                 echo $response;
                 break;
