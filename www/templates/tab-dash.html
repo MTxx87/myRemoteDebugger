@@ -1,0 +1,42 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">Recent Updates</div>
+      <div class="item item-body">
+        <div>
+          There is a fire in <b>sector 3</b>
+        </div>
+      </div>
+    </div>
+    <div class="list card" ng-click="initialize()">
+            <h4>INITIALIZE</h4>
+    </div>    
+    <div class="list card" ng-click="close()">
+            <h4>CLOSE SESSION</h4>
+    </div>  
+    <div class="list card" ng-click="trace()">
+            <h4>generate trace</h4>
+    </div>  
+    <div class="list card" ng-click="info()">
+            <h4>generate info</h4>
+    </div>  
+    <div class="list card" ng-click="warn()">
+            <h4>generate warn</h4>
+    </div>   
+    <div class="list card" ng-click="debug()">
+            <h4>generate debug</h4>
+    </div>  
+    <div class="list card" ng-click="error()">
+            <h4>generate error</h4>
+    </div>
+      <div class="list card" ng-click="exceptionCode()">
+            <h4>generate exception from code</h4>
+    </div>
+    <div class="list card" ng-click="exceptionNetwork()">
+            <h4>generate exception from network</h4>
+    </div>
+    <div class="list card" ng-click="triggerLocalStorageUpload()">
+            <h4>trigger uploading from localStorage</h4>
+    </div>  
+  </ion-content>
+</ion-view>

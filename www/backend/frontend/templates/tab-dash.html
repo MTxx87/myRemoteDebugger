@@ -1,0 +1,56 @@
+<ion-view view-title="myRemoteDebugger Viewer">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">Sessions</div>
+    </div>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search"  ng-model="searchText">
+      </label>
+    </div>  
+    <ion-scroll style="height: 200px;" has-bouncing="true">
+          <div class="list">
+              <a class="item item-icon-left item-icon-right" href="#" ng-repeat="session in sessions | filter:searchText">
+                <i class="icon ion-person"></i>
+                  {{session.user}} 
+                  <div class="more-info">{{session.startDate | date:'MM/dd/yy'}} - {{session.startTime}} - {{session.sessionId}}</div>
+                <i class="icon ion-chevron-right"></i>
+              </a>
+
+              <a class="item item-icon-left item-icon-right" href="#">
+                <i class="icon ion-steam"></i>
+                Trace
+                <i class="icon ion-chevron-right"></i>  
+              </a>
+
+              <a class="item item-icon-left item-icon-right" href="#">
+                <i class="icon ion-information-circled"></i>
+                Info
+                 <i class="icon ion-chevron-right"></i>
+              </a>
+
+              <a class="item item-icon-left item-icon-right" href="#">
+                <i class="icon ion-alert-circled"></i>
+                 Warn
+                 <i class="icon ion-chevron-right"></i>
+              </a>
+              <a class="item item-icon-left item-icon-right" href="#">
+                <i class="icon ion-code"></i>
+                 Debug
+                 <i class="icon ion-chevron-right"></i>
+              </a>
+              <a class="item item-icon-left item-icon-right" href="#">
+                <i class="icon ion-close-circled"></i>
+                 Error
+                 <i class="icon ion-chevron-right"></i>
+              </a>
+              <a class="item item-icon-left item-icon-right" href="#">
+                <i class="icon ion-close-circled"></i>
+                 Exception
+                 <i class="icon ion-chevron-right"></i>
+              </a>
+        </div>
+    </ion-scroll>
+  </ion-content>
+</ion-view>
