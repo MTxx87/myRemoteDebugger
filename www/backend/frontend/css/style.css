@@ -40,14 +40,29 @@
   text-align: center;
   border-radius: 50%;
   height: 41px;
+  transition:All 1s ease;
+ -webkit-transition:All 1s ease;
+ -moz-transition:All 1s ease;
+ -o-transition:All 1s ease;
+  opacity: 0;    
 }
 
 .show {
-    display: block;
+    opacity: 1;
 }
 
 .scroll-to-top i {
   font-size: 35px;
   color: #FFFFFF;
   line-height: 40px;
+}
+
+.item.item-text-center {
+    text-align: center;
+}
+
+.item.item-error > p {
+  overflow: visible;
+  text-overflow: initial;
+  white-space: normal;
 }

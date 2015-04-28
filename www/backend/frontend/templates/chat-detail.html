@@ -4,11 +4,30 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{chat.name}}">
-  <ion-content class="padding">
-    <img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
-    <p>
-      {{chat.lastText}}
-    </p>
+<ion-view view-title="{{session.info.user}}">
+  <scrolltop class="scroll-to-top" ng-click="scrollTop()"><i class="ion-arrow-up-a icon"></i></scrolltop>     
+  <ion-content>
+    <ion-list>
+       <a class="item item-icon-right item-text-center">
+           <i class="icon ion-ios-arrow-down"></i>
+           SessionId {{session.info.sessionId}}
+      </a>    
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search"  ng-model="searchText">
+      </label>
+    </ion-list>
+    <ion-refresher
+        pulling-text="Pull to refresh..."
+        on-refresh="doRefresh()">
+    </ion-refresher>
+    <ion-list>
+        <a class="item item-icon-left item-icon-right" 
+           ng-repeat="event in session.data | orderBy:['dateFire','timeFire'] | filter:searchText">
+            <i class="icon icons['session.type']"></i>
+            {{event.msg}} - {{event.timeFire}}
+            <i class="icon ion-ios-arrow-right"></i>  
+        </a>
+    </ion-list>    
   </ion-content>
 </ion-view>

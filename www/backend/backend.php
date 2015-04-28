@@ -2,6 +2,11 @@
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST'); 
     require_once '_lib/meekrodb.2.3.class.php';
+
+    $myDatabase = 'my_matteotoninidev';
+    $myPassword = 'doctecesbe53';
+    $myUser = 'matteotoninidev';
+    
     require_once 'parameters.php';
 
     $jsonPOST = json_decode(file_get_contents("php://input"));

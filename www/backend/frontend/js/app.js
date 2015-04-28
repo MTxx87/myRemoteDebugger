@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($rootScope, $ionicPlatform, $exceptionHandler) {
+.run(function($rootScope, $ionicPlatform, $exceptionHandler, MyRemoteFactory) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,6 +19,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+    
+    MyRemoteFactory.initUserSettings();  
+      
   });
     
 })
@@ -49,7 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
     .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+      url: '/chats/:session',
       views: {
         'tab-chats': {
           templateUrl: 'templates/chat-detail.html',
@@ -71,23 +74,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/sessions');
 
-}).constant('COLORS',
-            
-    ['icon-positive','icon-calm','icon-assertive','icon-balanced','icon-energized','icon-royal','icon-dark']
-            
-).directive('scrollDetector', function($window, $ionicScrollDelegate) {
-  return {
-    restrict : 'A',
-    link: function(scope, element, attrs) {
-      var windowHeight = $window.innerHeight;
-      console.log(windowHeight);    
-      element.on('scroll', function() {
-         if ($ionicScrollDelegate.getScrollPosition().top > windowHeight * 2) {
-            console.log(element);
-         } else {
-            //element.removeClass('show');
-         }
-      });
-    }
-  };
-})
+}).constant('COLORS', ['icon-positive','icon-calm','icon-assertive','icon-balanced','icon-energized','icon-royal','icon-dark']
+).constant('MESSAGES', {
+    unknown : 'Unespected Error, please check your settings',
+    database : 'Error in retrieve data from database',
+    404 : 'Not Found, please check your URL in settings',
+    500 : 'Internal server Error, please check your URL in settings'
+}).constant('ICONS', {
+    trace : 'ion-steam',
+    info : 'ion-information-circled',
+    debug : 'ion-code',
+    warn : 'ion-alert-circled',
+    error : 'ion-close-circled',
+    exception : 'ion-ion-close-circled'
+}).directive("scrollDetector", function ($ionicScrollDelegate) {
+    return function(scope, element, attrs) {
+        angular.element(element).bind("scroll", function() {
+            if ( $ionicScrollDelegate.getScrollPosition().top > element[0].offsetHeight * 2) {
+                element.parent().find('scrolltop').addClass('show');
+            } else {
+                element.parent().find('scrolltop').removeClass('show');
+            }
+            scope.$apply();
+        });
+    };
+});

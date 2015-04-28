@@ -1,5 +1,9 @@
 <?php 
-    DB::$user = 'matteotoninidev';
-    DB::$password = 'doctecesbe53';
-    DB::$dbName = 'my_matteotoninidev';
+    DB::$user = $myUser;
+    DB::$password = $myPassword;
+    DB::$dbName = $myDatabase;
+
+//    $myDatabase = 'matteotoninidev';
+//    $myUser = 'doctecesbe53';
+//    $myPassword = 'my_matteotoninidev';
 ?>

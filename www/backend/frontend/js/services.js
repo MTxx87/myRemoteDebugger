@@ -1,28 +1,66 @@
 angular.module('starter.services', [])
 
-.factory('MyRemoteFactory', function($http, COLORS) {
+.factory('MyRemoteFactory', function($rootScope, $http, COLORS, MESSAGES) {
   
     var factory = {};
     var colorAssociation = [];
+    var userSettings = {
+        url : '',
+        database : '',
+        username : '',
+        password : ''
+    };
+    
+    factory.databaseCall = function (data, deferred) {
+        
+        $http({method: 'post', url: userSettings.url, data : angular.toJson(data)})
+        .success(function(data, status, headers, config) {
+            if (typeof data !== 'object' && typeof data === 'string') {
+                $rootScope.$broadcast('failLoadResources');
+                deferred.reject(data);
+            } else if (typeof data !== 'object' && typeof data !== 'string') {
+                $rootScope.$broadcast('failLoadResources');
+                deferre.reject(MESSAGES['database']);
+            } 
+            else {
+                $rootScope.$broadcast('successLoadResources');
+                deferred.resolve(data);
+            }
+          }).
+          error(function(data, status, headers, config) {
+            $rootScope.$broadcast('failLoadResources');
+            if (angular.isDefined(MESSAGES[status])) {
+                var message = MESSAGES[status];  
+            } else {
+                var message = MESSAGES['unknown'];
+            }
+            deferred.reject(message);
+        });
+    
+    }
     
     factory.getSessions = function (startId, deferred) {
         
         data = {
             method : 'interface/getSessions',
-            id : startId
+            id : startId,
+            userSettings : userSettings
         }
 
-        $http({method: 'post', url: 'http://www.matteotoninidev.altervista.org/backend/frontend.php', data : angular.toJson(data)})
-        .success(function(data, status, headers, config) {
-            deferred.resolve(data);
-          }).
-          error(function(data, status, headers, config) {
-            console.log(data);
-            console.log(status);
-            deferred.reject(data);
-        });
-        
+        factory.databaseCall(data,deferred);
     }
+    
+    factory.getSingleSession = function (sessionId, deferred) {
+        
+        data = {
+            method : 'interface/getSingleSession',
+            id : sessionId,
+            userSettings : userSettings
+        }
+
+        factory.databaseCall(data,deferred);
+    
+    };
     
     factory.giveColor = function (sessions) {
         var index = 0;
@@ -43,6 +81,25 @@ angular.module('starter.services', [])
         };
         
         return sessions;
+    }
+    
+    factory.initUserSettings = function () {
+        if (localStorage) {
+            if (window.localStorage.getItem('userSettings') !== null) {
+                userSettings = angular.fromJson(window.localStorage.getItem('userSettings'));
+            }
+        }
+    }
+    
+    factory.getUserSettings = function () {
+        return userSettings;
+    }
+    
+    factory.updateUserSettings = function (newSettings) {
+        userSettings = newSettings;
+        if (localStorage) {
+            window.localStorage.setItem('userSettings', angular.toJson(newSettings));
+        }
     }
     
     return factory; 

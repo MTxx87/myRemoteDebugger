@@ -1,9 +1,27 @@
 <ion-view view-title="Account">
   <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">URL</span>
+        <input type="text" ng-model='_userSettings.url' placeholder="http://<myserver>/backend/frontend.php">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Database</span>
+        <input type="text" ng-model='_userSettings.database' placeholder="mydatabase">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">User</span>
+        <input type="text" ng-model='_userSettings.user' placeholder="database user">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Password</span>
+        <input type="password" ng-model='_userSettings.password' placeholder="database password">
+      </label>
+      <div class="padding">    
+        <button class="button button-block button-positive" ng-click="saveSettings(_userSettings)">
+            Save Settings
+        </button>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
