@@ -1,0 +1,70 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="Id: {{sessionId}}">
+  <scrolltop class="scroll-to-top" ng-click="scrollTop()"><i class="ion-arrow-up-a icon"></i></scrolltop>     
+  <ion-content scroll-detector>
+    <ion-list>   
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search"  ng-model="searchText">
+      </label>
+    </ion-list>
+    <ion-refresher
+        pulling-text="Pull to refresh..."
+        on-refresh="doRefresh()">
+    </ion-refresher>
+    <ion-list>
+        <a class="item item-icon-left item-icon-right" 
+           ng-repeat="event in session | orderBy:['dateFire','timeFire']:'reverse' | filter:searchText"
+           ng-click="showInfoModal(event)"
+           >
+            <i class="icon {{icons[event.type]}}"></i>
+            {{event.msg}}
+            <div class="more-info">{{event.timeFire}}</div> 
+        </a>
+    </ion-list>    
+  </ion-content>
+</ion-view>
+
+<script id="moreDetailInfo.html" type="text/ng-template">
+  <div class="modal">
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">More info</h1>
+      <button class="button button-clear" ng-click="closeInfoModal()">Close</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content padding="true">
+        <div class="list list-inset">
+            <div class="item item-divider">
+              Event
+            </div>
+            <div class="item">
+              <strong>Session id </strong>{{moreDetailInfo.sessionId}}
+            </div>
+            <div class="item">
+              <strong>Start </strong>{{moreDetailInfo.dateFire}} @ {{moreDetailInfo.timeFire}}
+            </div>
+            <div class="item item-divider">
+              Message
+            </div>
+            <div class="item">
+              {{moreDetailInfo.msg}}
+            </div>
+            <div class="item item-divider" ng-if="moreDetailInfo.data">
+              Data
+            </div>
+            <div class="item" ng-if="moreDetailInfo.data">
+                <pre>
+                {{moreDetailInfo.data}}
+                </pre>
+            </div>
+        </div>
+    </ion-content>
+    </div>
+</script>
