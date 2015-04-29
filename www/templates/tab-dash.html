@@ -1,42 +1,58 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
-    </div>
     <div class="list card" ng-click="initialize()">
-            <h4>INITIALIZE</h4>
-    </div>    
-    <div class="list card" ng-click="close()">
-            <h4>CLOSE SESSION</h4>
-    </div>  
+            <h4>START SESSION</h4>
+    </div>     
     <div class="list card" ng-click="trace()">
-            <h4>generate trace</h4>
+            <h4>Trace user path in application</h4>
     </div>  
     <div class="list card" ng-click="info()">
-            <h4>generate info</h4>
+            <h4>Send info to the server</h4>
     </div>  
     <div class="list card" ng-click="warn()">
-            <h4>generate warn</h4>
+            <h4>Send a warning</h4>
+            <p>This fires automatically when http calls takes more thank 'warningAfter' parameter. (default 2seconds)</p>
     </div>   
     <div class="list card" ng-click="debug()">
-            <h4>generate debug</h4>
+            <h4>Debug</h4>
+            <p>Here you can attach some data</p>
     </div>  
     <div class="list card" ng-click="error()">
-            <h4>generate error</h4>
+            <h4>Error</h4>
+            <p>You can attach some data here too</p>
     </div>
       <div class="list card" ng-click="exceptionCode()">
-            <h4>generate exception from code</h4>
+            <h4>Exception</h4>
+            <p>This fires automatically when angular $exceptionHandler catch an error.</p>
     </div>
     <div class="list card" ng-click="exceptionNetwork()">
-            <h4>generate exception from network</h4>
+            <h4>Network</h4>
+            <p>This fires when http call takes long time to respond</p>
     </div>
-    <div class="list card" ng-click="triggerLocalStorageUpload()">
-            <h4>trigger uploading from localStorage</h4>
-    </div>  
+    <div class="list card" ng-click="close()">
+            <h4>CLOSE SESSION</h4>
+    </div>   
   </ion-content>
 </ion-view>
+
+<script id="name.html" type="text/ng-template" controller="DashCtrl">
+  <div class="modal">
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">Name</h1>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content padding="true">
+       <div class="list">
+          <label class="item item-input">
+            <input ng-model="user" type="text" placeholder="Name">
+          </label>
+              <button class="button button-positive button-block" ng-click="closeModal()">
+                  Ok
+              </button>   
+        </div>
+    </ion-content>
+    </div>
+</script>
+
