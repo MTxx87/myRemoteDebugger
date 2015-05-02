@@ -138,7 +138,7 @@ angular.module('mRD.controllers', [])
     
 })
 
-.controller('AccountCtrl', function($scope, MyRemoteFactory) {
+.controller('SettingsCtrl', function($scope, MyRemoteFactory) {
     $scope._userSettings = angular.copy(MyRemoteFactory.getUserSettings());
     console.log($scope._userSettings);
     

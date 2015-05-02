@@ -67,6 +67,10 @@
   white-space: normal;
 }
 
+.modal .item > p {
+    white-space: normal; 
+}
+
 .item pre {
   font-size: 11px;
   line-height: 12px;

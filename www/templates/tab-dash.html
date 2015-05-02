@@ -1,37 +1,29 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
-    <div class="list card" ng-click="initialize()">
-            <h4>START SESSION</h4>
-    </div>     
-    <div class="list card" ng-click="trace()">
-            <h4>Trace user path in application</h4>
-    </div>  
-    <div class="list card" ng-click="info()">
-            <h4>Send info to the server</h4>
-    </div>  
-    <div class="list card" ng-click="warn()">
-            <h4>Send a warning</h4>
-            <p>This fires automatically when http calls takes more thank 'warningAfter' parameter. (default 2seconds)</p>
-    </div>   
-    <div class="list card" ng-click="debug()">
-            <h4>Debug</h4>
-            <p>Here you can attach some data</p>
-    </div>  
-    <div class="list card" ng-click="error()">
-            <h4>Error</h4>
-            <p>You can attach some data here too</p>
+    <div class="list card">
+      <div class="item item-divider">Recent Updates</div>
+      <div class="item item-body">
+        <div>
+          There is a fire in <b>sector 3</b>
+        </div>
+      </div>
     </div>
-      <div class="list card" ng-click="exceptionCode()">
-            <h4>Exception</h4>
-            <p>This fires automatically when angular $exceptionHandler catch an error.</p>
+    <div class="list card">
+      <div class="item item-divider">Health</div>
+      <div class="item item-body">
+        <div>
+          You ate an apple today!
+        </div>
+      </div>
     </div>
-    <div class="list card" ng-click="exceptionNetwork()">
-            <h4>Network</h4>
-            <p>This fires when http call takes long time to respond</p>
+    <div class="list card">
+      <div class="item item-divider">Upcoming</div>
+      <div class="item item-body">
+        <div>
+          You have <b>29</b> meetings on your calendar tomorrow.
+        </div>
+      </div>
     </div>
-    <div class="list card" ng-click="close()">
-            <h4>CLOSE SESSION</h4>
-    </div>   
   </ion-content>
 </ion-view>
 

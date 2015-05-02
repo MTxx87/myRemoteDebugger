@@ -5,8 +5,8 @@ angular.module('mRD.services', [])
     var factory = {};
     var colorAssociation = [];
     var userSettings = {
-        url : '',
-        database : '',
+        url : 'http://www.matteotoninidev.altervista.org/backend/frontend.php',
+        database : 'my_matteotoninidev',
         username : '',
         password : ''
     };

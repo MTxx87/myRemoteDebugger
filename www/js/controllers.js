@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
     $scope.user = 'your name';
     
     $scope.initialize = function (user,url) {
-       trackingService.initializeSession($scope.user,'http://www.matteotoninidev.altervista.org/backend/backend.php');  
+       trackingService.initializeSession('Luca','http://www.matteotoninidev.altervista.org/backend/backend.php');  
     }
     
     $ionicModal.fromTemplateUrl('name.html', {
@@ -79,3 +79,20 @@ angular.module('starter.controllers', [])
     }
     
 })
+
+.controller('ChatsCtrl', function($scope, Chats) {
+  $scope.chats = Chats.all();
+  $scope.remove = function(chat) {
+    Chats.remove(chat);
+  }
+})
+
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+  $scope.chat = Chats.get($stateParams.chatId);
+})
+
+.controller('AccountCtrl', function($scope) {
+  $scope.settings = {
+    enableFriends: true
+  };
+});

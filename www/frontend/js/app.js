@@ -45,7 +45,7 @@ angular.module('mRD', ['ionic', 'mRD.controllers', 'mRD.services'])
   .state('tab.sessions', {
       url: '/sessions',
       views: {
-        'tab-chats': {
+        'tab-sessions': {
           templateUrl: 'templates/tab-sessions.html',
           controller: 'SessionsCtrl'
         }
@@ -54,19 +54,19 @@ angular.module('mRD', ['ionic', 'mRD.controllers', 'mRD.services'])
     .state('tab.session-detail', {
       url: '/sessions/:sessionId',
       views: {
-        'tab-chats': {
+        'tab-sessions': {
           templateUrl: 'templates/session-detail.html',
           controller: 'SessionDetailCtrl'
         }
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.settings', {
+    url: '/settings',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-settings': {
+        templateUrl: 'templates/tab-settings.html',
+        controller: 'SettingsCtrl'
       }
     }
   });

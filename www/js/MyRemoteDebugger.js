@@ -15,7 +15,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
     }
     
     if(angular.isDefined(navigator.connection)) {
-        console.log("è defined, network information è installato");
+        console.log("defined, network information is installed");
     }
 
 }).factory('$exceptionHandler', function () {
