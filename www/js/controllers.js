@@ -1,57 +1,27 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $http, $ionicModal, trackingService) { 
+.controller('DashCtrl', function($rootScope, $scope, $http, $ionicModal, $ionicPopup, trackingService) { 
     
-    $scope.user = 'your name';
+    $scope.user = '';
     
-    $scope.initialize = function (user,url) {
-       trackingService.initializeSession('Luca','http://www.matteotoninidev.altervista.org/backend/backend.php');  
+    
+    $scope.login = function () {
+        $ionicModal.fromTemplateUrl('name.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+               $rootScope.modal = modal;
+               $rootScope.modal.show();
+        });
     }
     
-    $ionicModal.fromTemplateUrl('name.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function(modal) {
-           $scope.modal = modal;
-           $scope.modal.show();
-    });
+    $scope.closeModal = function (user) {
+        trackingService.initializeSession(user,'http://www.matteotoninidev.altervista.org/backend/backend.php'); 
+        $rootScope.modal.hide();
+    };
     
-    $scope.closeModal = function () {
-        $scope.modal.hide();
-    }
-    
-    $scope.close = function () {
-       trackingService.closeSession();
-    }
-    
-    $scope.trace = function () {
-       trackingService.trace('This is useful to trace the user path in application');
-    }
-    
-    $scope.info = function () {
-       trackingService.info('this is useful to send some infos');
-    }
-    
-     $scope.warn = function () {
-       var rawData = {
-           name : $scope.user,
-       }     
-       trackingService.warn('this is a warning, for example it fire automatically when http calls tooks more than 2seconds to respond, but you can fire it by yourself too!', rawData);
-    }
-    
-    $scope.debug = function () {
-         var rawData = {
-           name : $scope.user,
-       }    
-       trackingService.debug('this is a debug message and you can attach to it some data', rawData);
-    }
-    
-    $scope.error = function () {
-         var rawData = {
-           name : 'Matteo',
-           surname : 'Tonini'
-       }    
-       trackingService.error('this is an error and you can attach some data too', rawData);
+    $scope.logout = function () {
+        trackingService.closeSession();
     }
     
     $scope.exceptionCode = function () {
@@ -70,29 +40,51 @@ angular.module('starter.controllers', [])
             console.log(data);
           }).
           error(function(data, status, headers, config) {
-            //console.log(data);
+            var myPopup = $ionicPopup.show({
+                template: '',
+                title: 'Network Error',
+                subTitle: 'Can\'t get more newsfeed',
+                scope: $scope,
+                buttons: [
+                  {
+                    text: '<b>Close</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                      myPopup.close();
+                    }
+                  }
+                ]
+              });
         });
-    }
-    
-    $scope.triggerLocalStorageUpload = function () {
-        trackingService.sendLocalStorageToServer();
     }
     
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function($scope, Chats, trackingService) {
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
+    trackingService.warn('Warning: user removes an element', chat);  
   }
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+   $scope.chat = Chats.get($stateParams.chatId);
+    $scope.error = function () {
+         if (thisVariable) {
+             var msg = 'this piece of code generates an error because thisVariable is not defined';
+         } 
+    }  
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, trackingService) {
   $scope.settings = {
     enableFriends: true
   };
+  setTimeout( function () {
+        
+        trackingService.info('user remains on settings for at least 2 seconds');
+        
+    }, 2000);    
+  trackingService.debug('Debug message on settings', $scope.settings);       
 });

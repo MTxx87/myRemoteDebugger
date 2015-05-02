@@ -1,6 +1,6 @@
 angular.module('mRD.controllers', [])
 
-.controller('SessionsCtrl', function($window, $scope, $q, $ionicModal, $ionicListDelegate, $ionicScrollDelegate, MyRemoteFactory) {
+.controller('SessionsCtrl', function($window, $scope, $q, $ionicModal, $ionicListDelegate, $ionicScrollDelegate, $ionicLoading, MyRemoteFactory) {
     
     $scope.$on('failLoadResources', function () {
         $scope.isError = true;
@@ -31,7 +31,8 @@ angular.module('mRD.controllers', [])
     }
      
     
-    function getSessions (startId) {
+    function getSessions (startId, showLoader) {
+        if (showLoader) { $ionicLoading.show(); }
         D_sessions = $q.defer();
         P_sessions = D_sessions.promise;
 
@@ -41,7 +42,8 @@ angular.module('mRD.controllers', [])
                 console.log(data);
                 $scope.sessions = data;
                 //this hide the pull to refres spinner
-                $scope.$broadcast('scroll.refreshComplete');
+                if (showLoader) { $ionicLoading.hide(); }
+                else { $scope.$broadcast('scroll.refreshComplete'); }
             },
             function (message) {
                 console.log(message);
@@ -49,16 +51,18 @@ angular.module('mRD.controllers', [])
                 $scope.sessions = [];
                 //this hide the pull to refres spinner
                 $scope.$broadcast('scroll.refreshComplete');
+                $ionicLoading.hide();
             }
         );
         
         MyRemoteFactory.getSessions(startId,D_sessions);
+
     }
     
-    getSessions(0);
+    getSessions(0,true);
     
     $scope.doRefresh = function () {
-        getSessions(0);
+        getSessions(0,false);
     }
     
     $scope.scrollTop = function() {
@@ -67,7 +71,7 @@ angular.module('mRD.controllers', [])
     
 })
 
-.controller('SessionDetailCtrl', function($scope, $stateParams, $q, $ionicScrollDelegate, $ionicModal, MyRemoteFactory, ICONS) {
+.controller('SessionDetailCtrl', function($scope, $stateParams, $q, $ionicScrollDelegate, $ionicModal, $ionicLoading, MyRemoteFactory, ICONS) {
     
     $scope.sessionId = $stateParams.sessionId;
     $scope.icons = ICONS;
@@ -103,7 +107,8 @@ angular.module('mRD.controllers', [])
         $scope.moreDetailInfo = {};
     }
     
-    function getSingleSession (sessionId) {
+    function getSingleSession (sessionId, showLoader) {
+        if (showLoader) { $ionicLoading.show(); }
         D_single = $q.defer();
         P_single = D_single.promise;
 
@@ -111,25 +116,28 @@ angular.module('mRD.controllers', [])
             function (data) {
                 console.log(data);
                 $scope.session = data;
-                //this hide the pull to refres spinner
-                $scope.$broadcast('scroll.refreshComplete');
+                //this hide the pull to refres spinner or loader
+                if (showLoader) {  $ionicLoading.hide(); }
+                else { $scope.$broadcast('scroll.refreshComplete'); }
+               
             },
             function (message) {
                 console.log(message);
                 $scope.errorMessage = message;
                 $scope.session = [];
-                //this hide the pull to refres spinner
-                $scope.$broadcast('scroll.refreshComplete');
+                //this hide the pull to refres spinner or loader
+                if (showLoader) {  $ionicLoading.hide(); }
+                else { $scope.$broadcast('scroll.refreshComplete'); }
             }
         );
         
         MyRemoteFactory.getSingleSession(sessionId,D_single);
     }
     
-    getSingleSession($scope.sessionId);
+    getSingleSession($scope.sessionId, true);
     
     $scope.doRefresh = function () {
-        getSingleSession($scope.sessionId);
+        getSingleSession($scope.sessionId, false);
     }
     
     $scope.scrollTop = function() {

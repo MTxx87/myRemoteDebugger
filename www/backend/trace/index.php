@@ -4,6 +4,8 @@
             DB::insert('sessions', array(
                 'sessionId' => $jsonPOST->sessionId,
                 'user' => $jsonPOST->user,
+                'app' => $jsonPOST->app,
+                'version' => $jsonPOST->version,
                 'os' => $jsonPOST->os,
                 'platform' => $jsonPOST->platform,
                 'model' => $jsonPOST->model,
@@ -25,7 +27,8 @@
                 'sessionId' => $jsonPOST->sessionId,
                 'timeFire' => $jsonPOST->timeFire,
                 'dateFire' => $jsonPOST->dateFire,
-                'msg' => $jsonPOST->msg
+                'msg' => $jsonPOST->msg,
+                'data' => json_encode($jsonPOST->data)
             ));
             echo $jsonPOST->method . ' ' . $jsonPOST->sessionId;
         break;

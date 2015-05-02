@@ -23,7 +23,7 @@
            ng-click="showInfoModal(event)"
            >
             <i class="icon {{icons[event.type]}}"></i>
-            {{event.msg}}
+            {{event.msg}} <span class="hidden">{{event.type}}</span>
             <div class="more-info">{{event.timeFire}}</div> 
         </a>
     </ion-list>    

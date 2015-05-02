@@ -24,7 +24,20 @@
         </div>
       </div>
     </div>
-  </ion-content>
+    <div class="padding">    
+        <button class="button button-block button-calm" ng-click="exceptionNetwork()">
+            get more Feed
+        </button>
+      </div>  
+    <div class="padding"> 
+        <button class="button button-block button-royal" ng-click="login()">
+            Login
+        </button>
+        <button class="button button-block button-assertive" ng-click="logout()">
+            Logout
+        </button>
+    </div>  
+  </ion-content>    
 </ion-view>
 
 <script id="name.html" type="text/ng-template" controller="DashCtrl">
@@ -40,7 +53,7 @@
           <label class="item item-input">
             <input ng-model="user" type="text" placeholder="Name">
           </label>
-              <button class="button button-positive button-block" ng-click="closeModal()">
+              <button class="button button-positive button-block" ng-click="closeModal(user)">
                   Ok
               </button>   
         </div>

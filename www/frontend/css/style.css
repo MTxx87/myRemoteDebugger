@@ -75,3 +75,17 @@
   font-size: 11px;
   line-height: 12px;
 }
+
+.loading-container .loading {
+    background-color: transparent;
+}
+
+.spinner svg {
+  stroke: #387ef5;
+  fill: #387ef5;
+}
+
+.hidden {
+    position: fixed;
+    left: -100%;
+}
