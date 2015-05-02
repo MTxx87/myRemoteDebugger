@@ -18,13 +18,22 @@
         on-refresh="doRefresh()">
     </ion-refresher>
     <ion-list>
+        <a class="item item-text-center">
+            SESSION START
+        </a>
+        <a ng-if="session.length == 0" class="item item-text-center more-info">
+            No events in this session
+        </a>
         <a class="item item-icon-left item-icon-right" 
-           ng-repeat="event in session | orderBy:['dateFire','timeFire']:'reverse' | filter:searchText"
+           ng-repeat="event in session | orderBy:['dateFire','timeFire'] | filter:searchText"
            ng-click="showInfoModal(event)"
            >
             <i class="icon {{icons[event.type]}}"></i>
             {{event.msg}} <span class="hidden">{{event.type}}</span>
             <div class="more-info">{{event.timeFire}}</div> 
+        </a>
+        <a class="item item-text-center">
+            SESSION STOP
         </a>
     </ion-list>    
   </ion-content>
