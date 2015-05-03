@@ -1,53 +1,31 @@
-angular.module('starter.controllers', [])
+angular.module('appTest.controllers', [])
 
-.controller('DashCtrl', function($scope, $http, trackingService) { 
+.controller('DashCtrl', function($rootScope, $scope, $http, $ionicModal, $ionicPopup, trackingService) { 
     
-    $scope.initialize = function (user,url) {
-       trackingService.initializeSession('matteo','http://www.matteotoninidev.altervista.org/backend/backend.php');  
+    $scope.user = '';
+    
+    
+    $scope.login = function () {
+        $ionicModal.fromTemplateUrl('name.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+               $rootScope.modal = modal;
+               $rootScope.modal.show();
+        });
     }
     
-    $scope.close = function () {
-       trackingService.closeSession();
-    }
+    $scope.closeModal = function (user) {
+        trackingService.initializeSession(user,'http://www.matteotoninidev.altervista.org/backend/backend.php'); 
+        $rootScope.modal.hide();
+    };
     
-    $scope.close = function () {
-       trackingService.closeSession();
-    }
-    
-    $scope.trace = function () {
-       trackingService.trace('this is ?^# demà tr°ce');
-    }
-    
-    $scope.info = function () {
-       trackingService.info('this is a new demo info');
-    }
-    
-     $scope.warn = function () {
-       var rawData = {
-           name : 'Matteo',
-           surname : 'Tonini'
-       }     
-       trackingService.warn('this is a demo warn', rawData);
-    }
-    
-    $scope.debug = function () {
-         var rawData = {
-           name : 'Matteo',
-           surname : 'Tonini'
-       }    
-       trackingService.debug('this is a demo debug', rawData);
-    }
-    
-    $scope.error = function () {
-         var rawData = {
-           name : 'Matteo',
-           surname : 'Tonini'
-       }    
-       trackingService.error('this is a demo error', rawData);
+    $scope.logout = function () {
+        trackingService.closeSession();
     }
     
     $scope.exceptionCode = function () {
-       if (canaja) { console.log("this create an exception"); }    
+       if (thisVariable) { console.log("this create an exception"); }    
     }
     
     $scope.exceptionNetwork = function () {
@@ -62,29 +40,51 @@ angular.module('starter.controllers', [])
             console.log(data);
           }).
           error(function(data, status, headers, config) {
-            //console.log(data);
+            var myPopup = $ionicPopup.show({
+                template: '',
+                title: 'Network Error',
+                subTitle: 'Can\'t get more newsfeed',
+                scope: $scope,
+                buttons: [
+                  {
+                    text: '<b>Close</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                      myPopup.close();
+                    }
+                  }
+                ]
+              });
         });
-    }
-    
-    $scope.triggerLocalStorageUpload = function () {
-        trackingService.sendLocalStorageToServer();
     }
     
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function($scope, Chats, trackingService) {
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
+    trackingService.warn('Warning: user removes an element', chat);  
   }
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+   $scope.chat = Chats.get($stateParams.chatId);
+    $scope.error = function () {
+         if (thisVariable) {
+             var msg = 'this piece of code generates an error because thisVariable is not defined';
+         } 
+    }  
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, trackingService) {
   $scope.settings = {
     enableFriends: true
   };
+  setTimeout( function () {
+        
+        trackingService.info('user remains on settings for at least 2 seconds');
+        
+    }, 2000);    
+  trackingService.debug('Debug message on settings', $scope.settings);       
 });

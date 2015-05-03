@@ -8,35 +8,56 @@
         </div>
       </div>
     </div>
-    <div class="list card" ng-click="initialize()">
-            <h4>INITIALIZE</h4>
-    </div>    
-    <div class="list card" ng-click="close()">
-            <h4>CLOSE SESSION</h4>
-    </div>  
-    <div class="list card" ng-click="trace()">
-            <h4>generate trace</h4>
-    </div>  
-    <div class="list card" ng-click="info()">
-            <h4>generate info</h4>
-    </div>  
-    <div class="list card" ng-click="warn()">
-            <h4>generate warn</h4>
-    </div>   
-    <div class="list card" ng-click="debug()">
-            <h4>generate debug</h4>
-    </div>  
-    <div class="list card" ng-click="error()">
-            <h4>generate error</h4>
+    <div class="list card">
+      <div class="item item-divider">Health</div>
+      <div class="item item-body">
+        <div>
+          You ate an apple today!
+        </div>
+      </div>
     </div>
-      <div class="list card" ng-click="exceptionCode()">
-            <h4>generate exception from code</h4>
+    <div class="list card">
+      <div class="item item-divider">Upcoming</div>
+      <div class="item item-body">
+        <div>
+          You have <b>29</b> meetings on your calendar tomorrow.
+        </div>
+      </div>
     </div>
-    <div class="list card" ng-click="exceptionNetwork()">
-            <h4>generate exception from network</h4>
-    </div>
-    <div class="list card" ng-click="triggerLocalStorageUpload()">
-            <h4>trigger uploading from localStorage</h4>
+    <div class="padding">    
+        <button class="button button-block button-calm" ng-click="exceptionNetwork()">
+            get more Feed
+        </button>
+      </div>  
+    <div class="padding"> 
+        <button class="button button-block button-royal" ng-click="login()">
+            Login
+        </button>
+        <button class="button button-block button-assertive" ng-click="logout()">
+            Logout
+        </button>
     </div>  
-  </ion-content>
+  </ion-content>    
 </ion-view>
+
+<script id="name.html" type="text/ng-template" controller="DashCtrl">
+  <div class="modal">
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">Name</h1>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content padding="true">
+       <div class="list">
+          <label class="item item-input">
+            <input ng-model="user" type="text" placeholder="Name">
+          </label>
+              <button class="button button-positive button-block" ng-click="closeModal(user)">
+                  Ok
+              </button>   
+        </div>
+    </ion-content>
+    </div>
+</script>
+

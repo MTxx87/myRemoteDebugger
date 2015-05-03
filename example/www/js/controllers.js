@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('appTest.controllers', [])
 
 .controller('DashCtrl', function($rootScope, $scope, $http, $ionicModal, $ionicPopup, trackingService) { 
     

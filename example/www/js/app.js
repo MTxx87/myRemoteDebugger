@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['MyRemoteDebugger', 'ionic', 'starter.controllers', 'starter.services'])
+angular.module('appTest', ['MyRemoteDebugger', 'ionic', 'appTest.controllers', 'appTest.services'])
 
 .run(function($rootScope, $ionicPlatform, $exceptionHandler) {
   $ionicPlatform.ready(function() {

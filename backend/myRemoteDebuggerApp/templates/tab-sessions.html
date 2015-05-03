@@ -15,6 +15,9 @@
         <a ng-if="isError" class="item item-error">
             <p ng-bind-html="errorMessage"></p>
         </a>
+        <a ng-if="sessions.length == 0 && !isError" class="item item-text-center more-info">
+            No session
+        </a>
         <ion-item class="item item-icon-left item-icon-right"
            href="#/tab/sessions/{{session.sessionId}}"
            ng-repeat="session in sessions | orderBy:['startDate','startTime']:'reverse' | filter:searchText">

@@ -113,6 +113,22 @@ angular.module('mRD.services', [])
         return swap;
     }
     
+    factory.createTables = function (deferred) {
+        data = {
+            method : 'interface/createTables',
+            userSettings : userSettings
+        }
+        factory.databaseCall(data,deferred);
+    }
+    
+    factory.deleteData = function (deferred) {
+        data = {
+            method : 'interface/deleteData',
+            userSettings : userSettings
+        }
+        factory.databaseCall(data,deferred);
+    }
+    
     return factory; 
     
 });

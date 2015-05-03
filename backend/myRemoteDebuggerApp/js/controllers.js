@@ -146,12 +146,74 @@ angular.module('mRD.controllers', [])
     
 })
 
-.controller('SettingsCtrl', function($scope, MyRemoteFactory) {
+.controller('SettingsCtrl', function($scope, $ionicLoading, $ionicPopup, $q, MyRemoteFactory) {
+    
+    function accomplishedPopup (title, message, headerClass) {
+        var alertPopup = $ionicPopup.alert({
+         title: title,
+         template: message,
+         cssClass : headerClass    
+       });
+    }
+    
     $scope._userSettings = angular.copy(MyRemoteFactory.getUserSettings());
-    console.log($scope._userSettings);
     
     $scope.saveSettings = function (newSettings) {
         MyRemoteFactory.updateUserSettings(newSettings);
+    }
+    
+    $scope.createTables = function () {
+        $ionicLoading.show();
+        D_create = $q.defer();
+        P_create = D_create.promise;
+
+        P_create.then(
+            function (data) {
+                accomplishedPopup('Done!',data.message, 'header-positive');
+                $ionicLoading.hide();
+            },
+            function (message) {
+                accomplishedPopup('error',message, 'header-assertive');
+                $ionicLoading.hide();
+            }
+        );
+        
+        MyRemoteFactory.createTables(D_create);
+    }
+    
+    $scope.deleteDataPopup = function () {
+       var confirmPopup = $ionicPopup.confirm({
+         title: 'Warning',
+         template: 'Are you sure you want to delete all the data?',
+         okType : 'button-assertive',
+         cssClass : 'header-assertive'   
+       });
+       confirmPopup.then(function(proceed) {
+         if(proceed) {
+           $scope.deleteData();
+         } 
+       });
+    };
+    
+    
+    
+    $scope.deleteData = function () {
+        $ionicLoading.show();
+        D_delete = $q.defer();
+        P_delete = D_delete.promise;
+
+        P_delete.then(
+            function (data) {
+                accomplishedPopup('Done!',data.message, 'header-positive');
+                $ionicLoading.hide();
+            },
+            function (message) {
+                accomplishedPopup('error',message, 'header-assertive');
+                $ionicLoading.hide();
+            }
+        );
+        
+        MyRemoteFactory.deleteData(D_delete);
     }
     
 });

@@ -7,6 +7,7 @@
         "/Users/matteo/Documents/MyRemoteDebugger/www/frontend/js/services.js",
         "/Users/matteo/Documents/MyRemoteDebugger/www/backend/frontend/lib/ionic/js/angular-ui/angular-ui-router.min.js",
         "/Users/matteo/Documents/MyRemoteDebugger/www/frontend/js/app.js",
-        "/Users/matteo/Documents/MyRemoteDebugger/www/backend/frontend/lib/ionic/js/angular-ui/angular-ui-router.js"
+        "/Users/matteo/Documents/MyRemoteDebugger/www/backend/frontend/lib/ionic/js/angular-ui/angular-ui-router.js",
+        "/Users/matteo/Documents/MyRemoteDebugger/backend/myRemoteDebuggerApp/js/services.js"
     ]
 }

@@ -5,7 +5,11 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }])
-.run(function($rootScope, $exceptionHandler, AjaxInterceptor, trackingService,listenToNetwork) {
+.run(function($rootScope, $exceptionHandler, AjaxInterceptor, trackingService, listenToNetwork, $rootElement) {
+    
+    var startChangeState, stopChangeState;
+    
+    console.log($rootElement.attr('ng-app')); 
     
     if (window.cordova) {
         $rootScope.imRunningInCordova = true;
@@ -15,8 +19,42 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
     }
     
     if(angular.isDefined(navigator.connection)) {
-        console.log("è defined, network information è installato");
+        console.log("defined, network information is installed");
     }
+    
+    // performance is to calculate time to change from one state to another
+    window.performance = window.performance || {};
+    performance.now = (function() {
+        return performance.now       ||
+            performance.mozNow    ||
+            performance.msNow     ||
+            performance.oNow      ||
+            performance.webkitNow ||            
+            Date.now  /*none found - fallback to browser default */
+    })();
+    
+    $rootScope.$on('$stateChangeStart', 
+    function(event, toState, toParams, fromState, fromParams){
+        isSession = trackingService.getSessionId();
+        if (isSession) {
+            startChangeState = performance.now();
+        }
+    });
+    
+    $rootScope.$on('$stateChangeSuccess', 
+    function(event, toState, toParams, fromState, fromParams){ 
+        isSession = trackingService.getSessionId();
+        if (isSession) {
+            stopChangeState = performance.now();
+            var timeToChangeState = stopChangeState - startChangeState;
+            data = {};
+            data.transitionTime = timeToChangeState.toFixed(2);
+            data.params = toParams;
+            msg = 'from ' + fromState.name + ' to ' + toState.name;
+            trackingService.trace(msg, data);
+        }
+    })
+
 
 }).factory('$exceptionHandler', function () {
     return function (exception, cause) {
@@ -56,7 +94,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
         }
     };
     return myInterceptor;
-}]).factory('trackingService',function ($q, $http, $rootScope, $timeout, $filter, deviceDetector) {
+}]).factory('trackingService',function ($q, $http, $rootScope, $timeout, $filter, $injector, $rootElement, deviceDetector) {
     
     EH = {};
     EH.user = null;
@@ -82,12 +120,15 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
         return time;
     }
     
-    EH.initializeSession = function (user, url) {
+    EH.initializeSession = function (user, url, appName, appVersion) {
         if (angular.isDefined(user) && angular.isDefined(url) && !EH.sessionId) {
-            
             var d = new Date();
             EH.sessionId = Date.parse(d);
             EH.url = url;
+            if (angular.isDefined(appName)) { var app = appName }
+            else { var app = $rootElement.attr('ng-app'); }
+            if (angular.isDefined(appVersion)) { var version = appVersion }
+            else { var version = $rootElement.attr('version'); }
             if ($rootScope.imRunningInCordova) {
                 if (angular.isDefined(device)) {
                     var OS =  device.version;
@@ -99,13 +140,15 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
                     var platform = deviceDetector.browser + " v. " + deviceDetector.browser_version;
                     var model = deviceDetector.device; 
                 }
-            } else {
+            } else {  
                var OS =  deviceDetector.os + " v. " + deviceDetector.os_version;
                var platform = deviceDetector.browser + " v. " + deviceDetector.browser_version;
                var model = deviceDetector.device; 
             }
             data = {
                 user: user,
+                app : app,
+                version : version,
                 startTime : EH.getCurrentTime(),
                 startDate : EH.getCurrentDate(),
                 sessionId : EH.sessionId,
@@ -125,7 +168,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
 //            }
             
         } else {
-            console.log("another session is running");
+            console.log("another session is running or user/url are undefined");
         }
     };
     
@@ -190,7 +233,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
                     //let's try again in a while
 //                    $timeout(function () {
 //                        EH.sendLocalStorageToServer();
-//                    }, 10000);
+//                    }, 60000);
                 });
             }
             recursive(0);
@@ -203,33 +246,34 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
             if ($rootScope.imRunningInCordova) {            
                if (navigator.connection.type != "NONE" && navigator.connection.type != "none") {
                     //I'm running in Cordova and app is connected to the internet
-                    console.log("sono connesso e mando i dati al server");
+                    console.log("I'm connected to the internet, send data to server");
                     EH.sendToServer(data);
                } else {
                    //I'm running in Cordova but app is not connected to the internet
-                    console.log("non sono connesso e mando i dati al local storage");
+                    console.log("I'm not connected to the internet, save data in localstorage");
                     EH.saveInLocalStorage(data);
                }
            } else {
                //I'm running in a browser
-               EH.saveInLocalStorage(data); //this is for localStorage testing
-               //EH.sendToServer(data);
+               //EH.saveInLocalStorage(data); //this is for localStorage testing
+               EH.sendToServer(data);
            }
         } else {
             console.log('----> miss data parameter to EH.send function');
         }
     }
     
-    EH.trace = function (msg) {
+    EH.trace = function (msg, data) {
         if (EH.sessionId) {
-            data = {
+            event = {
                 sessionId : EH.sessionId,
                 dateFire : EH.getCurrentDate(),
                 timeFire : EH.getCurrentTime(),
                 method : 'trace/newItem',
-                msg : msg
+                msg : msg,
+                data : data,
             }
-            EH.send(data);
+            EH.send(event);
         } else {
             console.log('----> initialize session before send something to server');
         }
@@ -237,14 +281,14 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
     
      EH.info = function (msg) {
         if (EH.sessionId) {
-            data = {
+            event = {
                 sessionId : EH.sessionId,
                 dateFire : EH.getCurrentDate(),
                 timeFire : EH.getCurrentTime(),
                 method : 'info/newItem',
                 msg : msg
             }
-            EH.send(data);
+            EH.send(event);
         } else {
             console.log('----> initialize session before send something to server');
         }
@@ -252,7 +296,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
     
     EH.warn = function (msg, data) {
         if (EH.sessionId) {
-            data = {
+            event = {
                 sessionId : EH.sessionId,
                 dateFire : EH.getCurrentDate(),
                 timeFire : EH.getCurrentTime(),
@@ -260,7 +304,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
                 msg : msg,
                 data : data
             }
-            EH.send(data);
+            EH.send(event);
         } else {
             console.log('----> initialize session before send something to server');
         }
@@ -268,7 +312,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
     
     EH.debug = function (msg, data) {
         if (EH.sessionId) {
-            data = {
+            event = {
                 sessionId : EH.sessionId,
                 dateFire : EH.getCurrentDate(),
                 timeFire : EH.getCurrentTime(),
@@ -276,7 +320,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
                 msg : msg,
                 data : data
             }
-            EH.send(data);
+            EH.send(event);
         } else {
             console.log('----> initialize session before send something to server');
         }
@@ -284,7 +328,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
     
     EH.error = function (msg, data) {
         if (EH.sessionId) {
-            data = {
+            event = {
                 sessionId : EH.sessionId,
                 dateFire : EH.getCurrentDate(),
                 timeFire : EH.getCurrentTime(),
@@ -292,7 +336,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
                 msg : msg,
                 data : data
             }
-            EH.send(data);
+            EH.send(event);
         } else {
             console.log('----> initialize session before send something to server');
         }
@@ -300,7 +344,7 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
     
     EH.exception = function (msg, data) {
         if (EH.sessionId) {
-            data = {
+            event = {
                 sessionId : EH.sessionId,
                 dateFire : EH.getCurrentDate(),
                 timeFire : EH.getCurrentTime(),
@@ -308,9 +352,8 @@ angular.module('MyRemoteDebugger',['ng.deviceDetector'])
                 msg : msg,
                 data : data
             }
-            EH.send(data);
+            EH.send(event);
         } else {
-            console.log(data);
             console.log('----> initialize session before send something to server');
         }
     }
