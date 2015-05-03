@@ -10,7 +10,7 @@ In your index.html:
 <script src="MyRemoteDebugger.js"></script>
 ```
 
-Injiect module in your application:
+Inject module in your application:
 ```Javascript
 angular.module('app', ['MyRemoteDebugger'])
 ```
