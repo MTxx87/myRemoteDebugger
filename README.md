@@ -1,6 +1,6 @@
 # myRemoteDebugger
 **myRemoteDebugger** is an AngularJS module for web/hybrid applications. It is also integrated with Cordova/Phonegap.
-It helps to keep track of what happens in the app during external tests. It sens messages to server and providing a backend interface to take a look at the collected data.
+It helps to keep track of what happens in the app during external tests. It sends messages to server and providing a backend interface to take a look at the collected data.
 
 #Installation
 <h3>Client</h3>
@@ -32,3 +32,47 @@ Set up your settings:
 <li> <strong>Username:</strong> <i>&lt;username of your database&gt;</i></li>
 <li> <strong>Password:</strong> <i>&lt;password of your database&gt;</i></li>
 </ul>
+
+Click on **Create tables** button.
+
+DONE!!
+
+#Usage
+
+myRemoteDebugger provides **trackingService** interface to send messages to server.<br>
+Every message is considered to be an EVENT. <br> Events are organized in SESSIONS.
+
+Inject trackingService in your controller/service:
+```Javascript
+angular.module('app.controllers', [])
+.controller('AppCtrl', function(trackingService) { }); 
+```
+
+#Functions
+<h3>Init Session</h3>
+```Javascript
+trackingService.initializeSession('John','http://www.matteotoninidev.altervista.org/backend/Api/backend.php','myApp', '0.01')
+```
+Params: 
+<ul>
+<li> <strong>user</strong>(required): <i>&lt;user of your application&gt;</i></li>
+<li> <strong>url</strong>(required): http://<i>&lt;path to your server&gt;</i>/backend/Api/backend.php</li>
+<li> <strong>appName:</strong> <i>&lt;name of your application&gt;</i></li>
+<li> <strong>appVersion:</strong> <i>&lt;version of your application&gt;</i></li>
+</ul>
+
+Provides also informations about device/browser where the application is running.
+Cordova/Phonegap applications require [device plugin](https://github.com/apache/cordova-plugin-device).
+
+<h3>Close Session</h3>
+```Javascript
+trackingService.closeSession();
+```
+
+<h3>Trace</h3>
+```Javascript
+    trackingService.trace('this is message to trace', data);
+```
+
+It fires automatically on **$stateChangeSuccess** to track the user route in the application.<br>
+It fires automatically in Cordova/Phonegap applications on online/offline/pause/resume events<br> (requires [network information plugin](https://github.com/apache/cordova-plugin-network-information) ) 
