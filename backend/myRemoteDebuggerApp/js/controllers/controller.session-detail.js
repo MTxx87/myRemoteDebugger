@@ -3,8 +3,18 @@
 
     angular.module('mRD')
     .controller('SessionDetailCtrl', SessionDetailCtrl); 
-
-    function SessionDetailCtrl ($scope, $stateParams, $q, $ionicScrollDelegate, $ionicModal, $ionicLoading, MyRemoteFactory, ICONS) {
+    
+    SessionDetailCtrl.$inject = [
+        '$scope', 
+        '$stateParams', 
+        '$ionicScrollDelegate', 
+        '$ionicModal', 
+        '$ionicLoading', 
+        'MyRemoteFactory', 
+        'ICONS'
+    ];
+    
+    function SessionDetailCtrl ($scope, $stateParams, $ionicScrollDelegate, $ionicModal, $ionicLoading, MyRemoteFactory, ICONS) {
         
         var vm = this;
         vm.sessionId = $stateParams.sessionId;

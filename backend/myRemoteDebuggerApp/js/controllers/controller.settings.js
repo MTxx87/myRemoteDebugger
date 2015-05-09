@@ -3,8 +3,10 @@
 
     angular.module('mRD')
     .controller('SettingsCtrl', SettingsCtrl); 
-
-    function SettingsCtrl ($scope, $ionicLoading, $ionicPopup, $q, MyRemoteFactory) {
+    
+    SettingsCtrl.$inject = ['$scope', '$ionicLoading','$ionicPopup','MyRemoteFactory'];
+    
+    function SettingsCtrl ($scope, $ionicLoading, $ionicPopup, MyRemoteFactory) {
         
         var vm = this;
         vm.saveSettings = saveSettings;

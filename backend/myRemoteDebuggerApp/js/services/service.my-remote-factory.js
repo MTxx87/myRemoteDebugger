@@ -3,7 +3,15 @@
 
     angular.module('mRD')
     .factory('MyRemoteFactory', MyRemoteFactory);
-             
+    
+    MyRemoteFactory.$inject = [
+        '$rootScope', 
+        '$http', 
+        '$q', 
+        'COLORS', 
+        'MESSAGES'
+    ];
+    
     function MyRemoteFactory ($rootScope, $http, $q, COLORS, MESSAGES) {
         
         var colorAssociation = [];

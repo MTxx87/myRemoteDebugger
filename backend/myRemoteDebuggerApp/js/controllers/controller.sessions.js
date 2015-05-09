@@ -3,8 +3,17 @@
 
     angular.module('mRD')
     .controller('SessionsCtrl', SessionsCtrl);
-                           
-    function SessionsCtrl ($window, $scope, $q, $ionicModal, $ionicListDelegate, $ionicScrollDelegate, $ionicLoading, MyRemoteFactory) {
+    
+    SessionsCtrl.$inject = [
+        '$scope', 
+        '$ionicModal', 
+        '$ionicListDelegate', 
+        '$ionicScrollDelegate', 
+        '$ionicLoading', 
+        'MyRemoteFactory'
+    ];
+    
+    function SessionsCtrl ( $scope, $ionicModal, $ionicListDelegate, $ionicScrollDelegate, $ionicLoading, MyRemoteFactory) {
         
         var vm = this;
         vm.isError = false;
@@ -14,7 +23,7 @@
         vm.scrollTop = scrollTop;
 
         function showInfoModal (session) {
-            $ionicListDelegate. closeOptionButtons();
+            $ionicListDelegate.closeOptionButtons();
             vm.moreInfo = session;
             vm.modal.show();
         }
