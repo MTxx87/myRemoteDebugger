@@ -1,6 +1,6 @@
 // mRD frontend viewer
 
-angular.module('mRD', ['ionic', 'mRD.controllers', 'mRD.services'])
+angular.module('mRD', ['ionic'])
 
 .run(function($rootScope, $ionicPlatform, $exceptionHandler, MyRemoteFactory) {
   $ionicPlatform.ready(function() {
@@ -37,8 +37,8 @@ angular.module('mRD', ['ionic', 'mRD.controllers', 'mRD.services'])
       url: '/sessions',
       views: {
         'tab-sessions': {
-          templateUrl: 'templates/tab-sessions.html',
-          controller: 'SessionsCtrl'
+          templateUrl: 'templates/tab-sessions.html',    
+          controller : "SessionsCtrl as vm"
         }
       }
     })
@@ -47,7 +47,7 @@ angular.module('mRD', ['ionic', 'mRD.controllers', 'mRD.services'])
       views: {
         'tab-sessions': {
           templateUrl: 'templates/session-detail.html',
-          controller: 'SessionDetailCtrl'
+          controller: 'SessionDetailCtrl as vm'
         }
       }
     })
@@ -57,7 +57,7 @@ angular.module('mRD', ['ionic', 'mRD.controllers', 'mRD.services'])
     views: {
       'tab-settings': {
         templateUrl: 'templates/tab-settings.html',
-        controller: 'SettingsCtrl'
+        controller: 'SettingsCtrl as vm'
       }
     }
   });

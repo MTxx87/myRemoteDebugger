@@ -3,33 +3,33 @@
     <div class="list">
       <label class="item item-input item-stacked-label">
         <span class="input-label">URL</span>
-        <input type="text" ng-model='_userSettings.url' placeholder="http://<myserver>/backend/frontend.php">
+        <input type="text" ng-model='vm._userSettings.url' placeholder="http://<myserver>/backend/frontend.php">
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Database</span>
-        <input type="text" ng-model='_userSettings.database' placeholder="mydatabase">
+        <input type="text" ng-model='vm._userSettings.database' placeholder="mydatabase">
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">User</span>
-        <input type="text" ng-model='_userSettings.user' placeholder="database user">
+        <input type="text" ng-model='vm._userSettings.user' placeholder="database user">
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Password</span>
-        <input type="password" ng-model='_userSettings.password' placeholder="database password">
+        <input type="password" ng-model='vm._userSettings.password' placeholder="database password">
       </label>
       <div class="padding">    
-        <button class="button button-block button-calm" ng-click="saveSettings(_userSettings)">
+        <button class="button button-block button-calm" ng-click="vm.saveSettings(vm._userSettings)">
             Save Settings
         </button>
       </div>
         <div class="row">
             <div class="col col-50">
-                <button class="button button-block button-calm" ng-click="createTables()">
+                <button class="button button-block button-calm" ng-click="vm.createTables()">
                     Create Tables
                 </button>
             </div>
             <div class="col col-50">
-                <button class="button button-block button-assertive" ng-click="deleteDataPopup()">
+                <button class="button button-block button-assertive" ng-click="vm.deleteDataPopup()">
                     Delete all data
                 </button>
             </div>

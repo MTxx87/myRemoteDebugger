@@ -4,31 +4,31 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="Id: {{sessionId}}">
-  <scrolltop class="scroll-to-top" ng-click="scrollTop()"><i class="ion-arrow-up-a icon"></i></scrolltop>     
+<ion-view view-title="Id: {{vm.sessionId}}">
+  <scrolltop class="scroll-to-top" ng-click="vm.scrollTop()"><i class="ion-arrow-up-a icon"></i></scrolltop>     
   <ion-content scroll-detector>
     <ion-list>   
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Search"  ng-model="searchText">
+        <input type="text" placeholder="Search"  ng-model="vm.searchText">
       </label>
     </ion-list>
     <ion-refresher
         pulling-text="Pull to refresh..."
-        on-refresh="doRefresh()">
+        on-refresh="vm.doRefresh()">
     </ion-refresher>
     <ion-list>
         <a class="item item-text-center">
             SESSION START
         </a>
-        <a ng-if="session.length == 0" class="item item-text-center more-info">
+        <a ng-if="vm.session.length == 0" class="item item-text-center more-info">
             No events in this session
         </a>
         <a class="item item-icon-left item-icon-right" 
-           ng-repeat="event in session | orderBy:['dateFire','timeFire'] | filter:searchText"
-           ng-click="showInfoModal(event)"
+           ng-repeat="event in vm.session | orderBy:['dateFire','timeFire'] | filter:vm.searchText"
+           ng-click="vm.showInfoModal(event)"
            >
-            <i class="icon {{icons[event.type]}}"></i>
+            <i class="icon {{vm.icons[event.type]}}"></i>
             {{event.msg}} <span class="hidden">{{event.type}}</span>
             <div class="more-info">{{event.timeFire}}</div> 
         </a>
@@ -44,7 +44,7 @@
     <!-- Modal header bar -->
     <ion-header-bar class="bar-positive">
       <h1 class="title">More info</h1>
-      <button class="button button-clear" ng-click="closeInfoModal()">Close</button>
+      <button class="button button-clear" ng-click="vm.closeInfoModal()">Close</button>
     </ion-header-bar>
 
     <!-- Modal content area -->
@@ -54,23 +54,23 @@
               Event
             </div>
             <div class="item">
-              <strong>Session id </strong>{{moreDetailInfo.sessionId}}
+              <strong>Session id </strong>{{vm.moreDetailInfo.sessionId}}
             </div>
             <div class="item">
-              <strong>Start </strong>{{moreDetailInfo.dateFire}} @ {{moreDetailInfo.timeFire}}
+              <strong>Start </strong>{{vm.moreDetailInfo.dateFire}} @ {{vm.moreDetailInfo.timeFire}}
             </div>
             <div class="item item-divider">
               Message
             </div>
             <div class="item">
-              <p>{{moreDetailInfo.msg}}</p>
+              <p>{{vm.moreDetailInfo.msg}}</p>
             </div>
-            <div class="item item-divider" ng-if="moreDetailInfo.data">
+            <div class="item item-divider" ng-if="vm.moreDetailInfo.data">
               Data
             </div>
-            <div class="item" ng-if="moreDetailInfo.data">
+            <div class="item" ng-if="vm.moreDetailInfo.data">
                 <pre>
-                {{moreDetailInfo.data}}
+                {{vm.moreDetailInfo.data}}
                 </pre>
             </div>
         </div>

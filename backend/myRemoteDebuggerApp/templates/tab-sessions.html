@@ -1,32 +1,32 @@
 <ion-view view-title="MyRemoteDebugger"> 
-   <scrolltop class="scroll-to-top" ng-click="scrollTop()"><i class="ion-arrow-up-a icon"></i></scrolltop>    
+   <scrolltop class="scroll-to-top" ng-click="vm.scrollTop()"><i class="ion-arrow-up-a icon"></i></scrolltop>    
   <ion-content scroll-detector>   
     <ion-list>
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Search"  ng-model="searchText">
+        <input type="text" placeholder="Search"  ng-model="vm.searchText">
       </label>
     </ion-list>
     <ion-refresher
         pulling-text="Pull to refresh..."
-        on-refresh="doRefresh()">
+        on-refresh="vm.doRefresh()">
     </ion-refresher>
     <ion-list>
-        <a ng-if="isError" class="item item-error">
-            <p ng-bind-html="errorMessage"></p>
+        <a ng-if="vm.isError" class="item item-error">
+            <p ng-bind-html="vm.errorMessage"></p>
         </a>
-        <a ng-if="sessions.length == 0 && !isError" class="item item-text-center more-info">
+        <a ng-if="vm.sessions.length == 0 && !vm.isError" class="item item-text-center more-info">
             No session
         </a>
         <ion-item class="item item-icon-left item-icon-right"
            href="#/tab/sessions/{{session.sessionId}}"
-           ng-repeat="session in sessions | orderBy:['startDate','startTime']:'reverse' | filter:searchText">
+           ng-repeat="session in vm.sessions | orderBy:['startDate','startTime']:'reverse' | filter:vm.searchText">
             <i class="icon ion-person icon-{{session.color}}"></i>
               {{session.user}} 
               <div class="more-info">{{session.startDate | date:'MM/dd/yy'}} - {{session.startTime}} - {{session.sessionId}}</div>
             <i class="icon ion-chevron-right"></i>
             <ion-option-button class="button-info"
-                       ng-click="showInfoModal(session)">
+                       ng-click="vm.showInfoModal(session)">
                 More Info
             </ion-option-button>    
           </ion-item>
@@ -39,7 +39,7 @@
     <!-- Modal header bar -->
     <ion-header-bar class="bar-positive">
       <h1 class="title">More info</h1>
-      <button class="button button-clear" ng-click="closeInfoModal()">Close</button>
+      <button class="button button-clear" ng-click="vm.closeInfoModal()">Close</button>
     </ion-header-bar>
 
     <!-- Modal content area -->
@@ -49,34 +49,34 @@
               Session
             </div>
             <div class="item">
-              <strong>Session id </strong>{{moreInfo.sessionId}}
+              <strong>Session id </strong>{{vm.moreInfo.sessionId}}
             </div>
             <div class="item">
-              <strong>User </strong>{{moreInfo.user}}
+              <strong>User </strong>{{vm.moreInfo.user}}
             </div>
             <div class="item">
-              <strong>App </strong>{{moreInfo.app}}
+              <strong>App </strong>{{vm.moreInfo.app}}
             </div>
             <div class="item">
-              <strong>Version </strong>{{moreInfo.version}}
+              <strong>Version </strong>{{vm.moreInfo.version}}
             </div>
             <div class="item">
-              <strong>Start </strong>{{moreInfo.startDate}} @ {{moreInfo.startTime}}
+              <strong>Start </strong>{{vm.moreInfo.startDate}} @ {{vm.moreInfo.startTime}}
             </div>
             <div class="item">
-              <strong>Stop </strong>{{moreInfo.stopDate}} @ {{moreInfo.stopTime}}
+              <strong>Stop </strong>{{vm.moreInfo.stopDate}} @ {{vm.moreInfo.stopTime}}
             </div>
             <div class="item item-divider">
               Device
             </div>
             <div class="item">
-              <strong>Model </strong>{{moreInfo.model}}
+              <strong>Model </strong>{{vm.moreInfo.model}}
             </div>
             <div class="item">
-              <strong>OS </strong>{{moreInfo.os}}
+              <strong>OS </strong>{{vm.moreInfo.os}}
             </div>
             <div class="item">
-              <strong>Platform </strong>{{moreInfo.platform}}
+              <strong>Platform </strong>{{vm.moreInfo.platform}}
             </div>
         </div>
     </ion-content>
