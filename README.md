@@ -148,3 +148,6 @@ Features:
 <li>Delete all the data</li>
 <li>Search/filter sessions and events</li>
 </ul>
+
+<ul><li><h4><a target="_blank" href="http://matteotoninidev.altervista.org/myRemoteDebugger/backend/myRemoteDebuggerApp/">Demo Application</a></h4></li></ul>
+
