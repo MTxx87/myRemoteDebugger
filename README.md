@@ -3,7 +3,7 @@
 It helps to keep track of what happens in the app during external tests. <br>
 It sends messages to server and provides a backend interface to take a look at the collected data.<br>
 <br>
-[Demo](#user-content-myremotedebuggerapp)
+Take a look at the [Demo](#user-content-myremotedebuggerapp).
 
 #Installation
 <h3>Client</h3>
