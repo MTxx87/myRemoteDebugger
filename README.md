@@ -1,7 +1,9 @@
 # myRemoteDebugger
 **myRemoteDebugger** is an AngularJS module for web/hybrid applications integrated with Cordova/Phonegap.<br>
 It helps to keep track of what happens in the app during external tests. <br>
-It sends messages to server and provides a backend interface to take a look at the collected data.
+It sends messages to server and provides a backend interface to take a look at the collected data.<br>
+<br>
+[Demo](Readme.md#myRemoteDebuggerApp)
 
 #Installation
 <h3>Client</h3>
